@@ -78,12 +78,12 @@ const Home = () => {
     {
       title: "Senior Secondary Education (PUC)",
       institute: "Vijaya Vittala PU Composite",
-      detail: "95.5% (2018 – 2022)",
+      detail: "95.5% (2020 – 2022)",
     },
     {
       title: "Secondary Education (10th Grade)",
       institute: "Vijaya Vittala Vidyashala",
-      detail: "91.5% (2008 – 2018)",
+      detail: "91.5% (2008 – 2020)",
     },
   ];
 
