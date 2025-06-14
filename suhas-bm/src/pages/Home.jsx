@@ -190,17 +190,25 @@ const Home = () => {
           Execution-first engineer delivering impactful, production-grade solutions across AI, blockchain, and full-stack development. Passionate about owning the full product lifecycle ― from ideation and prototyping to deployment and optimization ― while collaborating seamlessly with cross-functional teams. Thrives on dissecting complex challenges, architecting clean, scalable code, and ensuring every feature leaves a lasting, measurable impact.
         </p>
 
+      {/* CTA Buttons */}
+      <div className="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
         <a
           href="#projects"
           aria-label="Scroll down to projects"
-          className="mt-8 inline-block px-8 py-4 text-lg font-medium rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent border-2 border-transparent hover:border-cyan-400 hover:bg-none hover:text-cyan-400 transition animate-glow-pulse"
+          className="px-8 py-4 text-lg font-medium rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent border-2 border-transparent hover:border-cyan-400 hover:bg-none hover:text-cyan-400 transition animate-glow-pulse"
         >
           View Projects
         </a>
 
-        <div role="button" aria-label="Scroll down" className="absolute bottom-8 animate-bounce text-white/50">
-          <FaArrowDown size={24} />
-        </div>
+        <a
+          href="https://drive.google.com/file/d/1cPYy5SuwtrQuSkozuLZvFKwilcfenMTb/view?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-8 py-4 text-lg font-medium rounded-full border border-white/20 text-white hover:text-cyan-300 hover:border-cyan-400 transition"
+        >
+          View Resume
+        </a>
+      </div>
       </section>
 
       {/* ---------- Education Timeline (Flex-Based, Aligned) ---------- */}
