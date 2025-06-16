@@ -1,31 +1,45 @@
 // src/pages/Home.jsx
 
-import { FaEnvelope, FaPhone, FaArrowDown } from "react-icons/fa";
+import { FaEnvelope, FaPhone, FaArrowDown, FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 import React,{ useState } from "react";
 
 function ProjectCard({ proj }) {
   const [hasImage, setHasImage] = useState(true);
+  const cardRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.5, 1, 0.5]);
 
   return (
-    <div
+    <motion.div
+      ref={cardRef}
+      style={{ y, opacity }}
       className={`
+        group relative
         flex flex-col 
         ${hasImage ? "lg:flex-row" : ""} 
-        items-center bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 
-        overflow-hidden hover:scale-[1.02] transition-all
+        items-center bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/10 
+        overflow-hidden hover:scale-[1.02] transition-all duration-500
+        shadow-lg hover:shadow-cyan-500/10
       `}
     >
-      {/* Image column, only when loaded */}
+      {/* Image column with overlay */}
       {hasImage && (
-        <div className="w-full lg:w-1/3 h-48 lg:h-auto flex-shrink-0">
+        <div className="relative w-full lg:w-1/3 h-48 lg:h-auto flex-shrink-0 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 mix-blend-overlay" />
           <img
             src={`/images/${proj.key}.png`}
             alt={`${proj.title} preview`}
             loading="lazy"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
             onError={() => setHasImage(false)}
           />
         </div>
@@ -34,8 +48,9 @@ function ProjectCard({ proj }) {
       {/* Content column */}
       <div className={`
         w-full ${hasImage ? "lg:w-2/3" : ""} p-8 space-y-4
+        relative z-10
       `}>
-        <h3 className="text-3xl font-semibold text-white text-center lg:text-left">
+        <h3 className="text-3xl font-semibold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
           {proj.title}
         </h3>
         <p className="text-white/70 text-base lg:text-lg leading-relaxed">
@@ -43,7 +58,13 @@ function ProjectCard({ proj }) {
         </p>
         <div className="flex flex-wrap gap-3">
           {proj.tech.map((t) => (
-            <span key={t} className="px-3 py-1 text-xs lg:text-sm rounded-full bg-cyan-500/20 text-white">
+            <span 
+              key={t} 
+              className="px-3 py-1 text-xs lg:text-sm rounded-full 
+                bg-gradient-to-r from-cyan-500/20 to-purple-500/20 
+                text-white/90 backdrop-blur-sm border border-white/10
+                hover:from-cyan-500/30 hover:to-purple-500/30 transition-colors"
+            >
               {t}
             </span>
           ))}
@@ -52,16 +73,25 @@ function ProjectCard({ proj }) {
           href={proj.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block mt-4 text-lg font-medium hover:text-cyan-400 transition"
+          className="inline-flex items-center gap-2 mt-4 text-lg font-medium 
+            text-cyan-400 hover:text-cyan-300 transition-colors
+            group-hover:translate-x-2 duration-300"
         >
-          View on GitHub →
+          View on GitHub 
+          <FaGithub className="transform group-hover:rotate-12 transition-transform" />
         </a>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 const Home = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
   const [text] = useTypewriter({
     words: ["Crafting Smart Contracts", "Building Intuitive Web Apps", "Solving Complex Challenges"],
     loop: true,
@@ -157,58 +187,86 @@ const Home = () => {
   ];
 
   return (
-    <div className="space-y-32">
-
-      {/* Hero */}
+    <div ref={containerRef} className="relative space-y-32">
+      {/* Hero Section */}
       <section
         id="hero"
-        aria-labelledby="hero-heading"
-        className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden"
+        className="relative min-h-screen flex flex-col justify-center items-center"
       >
-        <noscript>
-          <p className="text-center text-white/70 p-4">
-            Please enable JavaScript for the full experience.
-          </p>
-        </noscript>
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-900 via-black to-purple-900 opacity-5 -z-10" />
-
-        <h1
-          id="hero-heading"
-          className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-widest bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent text-center"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center space-y-8 max-w-5xl mx-auto px-4"
         >
-          Hi, I’m Suhas B M
-        </h1>
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight">
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
+              Hi, I'm Suhas B M
+            </span>
+          </h1>
 
-        <p className="mt-4 text-2xl md:text-3xl text-white/70 flex items-center">
-          <span>{text}</span>
-          <Cursor cursorColor="#00FFD5" />
-        </p>
+          <motion.p 
+            className="text-2xl md:text-3xl text-white/70 flex items-center justify-center gap-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <span>{text}</span>
+            <Cursor cursorColor="#00FFD5" />
+          </motion.p>
 
-        <div className="h-px bg-white/20 my-8 w-24" />
+          <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent w-48 mx-auto" />
 
-        <p className="mt-4 max-w-6xl text-lg md:text-xl text-white/60 text-center">
-          Execution-first engineer delivering impactful, production-grade solutions across AI, blockchain, and full-stack development. Passionate about owning the full product lifecycle ― from ideation and prototyping to deployment and optimization ― while collaborating seamlessly with cross-functional teams. Thrives on dissecting complex challenges, architecting clean, scalable code, and ensuring every feature leaves a lasting, measurable impact.
-        </p>
+          <motion.p 
+            className="text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            Execution-first engineer delivering impactful, production-grade solutions across AI, blockchain, and full-stack development. Passionate about owning the full product lifecycle ― from ideation and prototyping to deployment and optimization.
+          </motion.p>
 
-      {/* CTA Buttons */}
-      <div className="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
-        <a
-          href="#projects"
-          aria-label="Scroll down to projects"
-          className="px-8 py-4 text-lg font-medium rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent border-2 border-transparent hover:border-cyan-400 hover:bg-none hover:text-cyan-400 transition animate-glow-pulse"
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 items-center justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2 }}
+          >
+            <a
+              href="#projects"
+              className="group px-8 py-4 text-lg font-medium rounded-full 
+                bg-gradient-to-r from-cyan-400 to-purple-500 
+                hover:from-cyan-500 hover:to-purple-600 
+                text-white shadow-lg hover:shadow-cyan-500/25 
+                transition-all duration-300 transform hover:-translate-y-1"
+            >
+              View Projects
+              <FaArrowDown className="inline-block ml-2 transform group-hover:translate-y-1 transition-transform" />
+            </a>
+
+            <a
+              href="https://drive.google.com/file/d/1cPYy5SuwtrQuSkozuLZvFKwilcfenMTb/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group px-8 py-4 text-lg font-medium rounded-full 
+                border border-white/20 text-white 
+                hover:border-cyan-400 hover:text-cyan-300 
+                transition-all duration-300 transform hover:-translate-y-1
+                backdrop-blur-sm bg-white/5"
+            >
+              View Resume
+            </a>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div 
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
         >
-          View Projects
-        </a>
-
-        <a
-          href="https://drive.google.com/file/d/1cPYy5SuwtrQuSkozuLZvFKwilcfenMTb/view?usp=drive_link"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-8 py-4 text-lg font-medium rounded-full border border-white/20 text-white hover:text-cyan-300 hover:border-cyan-400 transition"
-        >
-          View Resume
-        </a>
-      </div>
+          <FaArrowDown className="text-white/30 text-2xl" />
+        </motion.div>
       </section>
 
       {/* ---------- Education Timeline (Flex-Based, Aligned) ---------- */}
@@ -404,42 +462,81 @@ const Home = () => {
       {/* Contact */}
       <section
         id="contact"
-        className="py-24 flex flex-col items-center text-center space-y-8"
-        aria-labelledby="contact-heading"
+        className="relative py-24"
       >
-        <h2 id="contact-heading" className="text-4xl font-semibold text-cyan-400">
-          Let’s build something impactful
-        </h2>
-        <div className="h-px bg-white/20 my-8 w-24 mx-auto" />
+        <div className="relative max-w-4xl mx-auto px-4">
+          <motion.h2 
+            className="text-4xl font-semibold text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+              Let's build something impactful
+            </span>
+          </motion.h2>
 
-        <div className="flex flex-col sm:flex-row gap-6">
-          <div className="flex items-center gap-4 p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:scale-[1.02] transition">
-            <FaEnvelope className="text-cyan-400 text-2xl" />
-            <div className="text-left">
-              <p className="font-medium">Email Me</p>
-              <a href="mailto:suhaasbm2004@gmail.com" className="text-white/70 hover:text-cyan-300 transition">
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div 
+              className="group p-8 bg-gradient-to-br from-white/5 to-white/[0.02] 
+                backdrop-blur-xl rounded-2xl border border-white/10 
+                hover:border-cyan-400/50 transition-all duration-500
+                hover:shadow-lg hover:shadow-cyan-500/10"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <FaEnvelope className="text-4xl text-cyan-400 mb-4 transform group-hover:rotate-12 transition-transform" />
+              <h3 className="text-xl font-semibold text-white mb-2">Email Me</h3>
+              <a 
+                href="mailto:suhaasbm2004@gmail.com" 
+                className="text-white/70 hover:text-cyan-300 transition-colors block"
+              >
                 suhaasbm2004@gmail.com
               </a>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:scale-[1.02] transition">
-            <FaPhone className="text-cyan-400 text-2xl" />
-            <div className="text-left">
-              <p className="font-medium">Call Me</p>
-              <a href="tel:+919036751497" className="text-white/70 hover:text-cyan-300 transition">
+            </motion.div>
+
+            <motion.div 
+              className="group p-8 bg-gradient-to-br from-white/5 to-white/[0.02] 
+                backdrop-blur-xl rounded-2xl border border-white/10 
+                hover:border-cyan-400/50 transition-all duration-500
+                hover:shadow-lg hover:shadow-cyan-500/10"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <FaPhone className="text-4xl text-cyan-400 mb-4 transform group-hover:rotate-12 transition-transform" />
+              <h3 className="text-xl font-semibold text-white mb-2">Call Me</h3>
+              <a 
+                href="tel:+919036751497" 
+                className="text-white/70 hover:text-cyan-300 transition-colors block"
+              >
                 +91 9036751497
               </a>
-            </div>
+            </motion.div>
           </div>
-        </div>
 
-        <a
-          href="mailto:suhaasbm2004@gmail.com"
-          className="mt-4 inline-block px-8 py-4 text-lg font-medium rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent border-2 border-transparent hover:border-cyan-400 hover:bg-none hover:text-cyan-400 transition animate-glow-pulse"
-          aria-label="Send me an email"
-        >
-          Reach Out &rarr;
-        </a>
+          <motion.div 
+            className="mt-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <a
+              href="mailto:suhaasbm2004@gmail.com"
+              className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium 
+                rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 
+                hover:from-cyan-500 hover:to-purple-600 
+                text-white shadow-lg hover:shadow-cyan-500/25 
+                transition-all duration-300 transform hover:-translate-y-1"
+            >
+              Reach Out
+              <FaEnvelope className="transform group-hover:rotate-12 transition-transform" />
+            </a>
+          </motion.div>
+        </div>
       </section>
 
     </div>
