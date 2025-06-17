@@ -3,7 +3,7 @@
 import { FaEnvelope, FaPhone, FaArrowDown, FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 import React,{ useState } from "react";
 
@@ -26,15 +26,15 @@ function ProjectCard({ proj }) {
         group relative
         flex flex-col 
         ${hasImage ? "lg:flex-row" : ""} 
-        items-center bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/10 
+        items-center bg-black/40 backdrop-blur-xl rounded-2xl border border-cyan-400/20 
         overflow-hidden hover:scale-[1.02] transition-all duration-500
-        shadow-lg hover:shadow-cyan-500/10
+        shadow-xl hover:shadow-cyan-500/20
       `}
     >
       {/* Image column with overlay */}
       {hasImage && (
         <div className="relative w-full lg:w-1/3 h-48 lg:h-auto flex-shrink-0 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 mix-blend-overlay" />
+          <div className="absolute inset-0 bg-cyan-400/10 mix-blend-overlay" />
           <img
             src={`/images/${proj.key}.png`}
             alt={`${proj.title} preview`}
@@ -50,10 +50,10 @@ function ProjectCard({ proj }) {
         w-full ${hasImage ? "lg:w-2/3" : ""} p-8 space-y-4
         relative z-10
       `}>
-        <h3 className="text-3xl font-semibold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+        <h3 className="text-3xl font-semibold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
           {proj.title}
         </h3>
-        <p className="text-white/70 text-base lg:text-lg leading-relaxed">
+        <p className="text-white/80 text-base lg:text-lg leading-relaxed">
           {proj.desc}
         </p>
         <div className="flex flex-wrap gap-3">
@@ -61,9 +61,8 @@ function ProjectCard({ proj }) {
             <span 
               key={t} 
               className="px-3 py-1 text-xs lg:text-sm rounded-full 
-                bg-gradient-to-r from-cyan-500/20 to-purple-500/20 
-                text-white/90 backdrop-blur-sm border border-white/10
-                hover:from-cyan-500/30 hover:to-purple-500/30 transition-colors"
+                bg-cyan-400/10 text-cyan-200 border border-cyan-400/20
+                backdrop-blur-sm hover:bg-cyan-400/20 transition-colors"
             >
               {t}
             </span>
@@ -74,7 +73,7 @@ function ProjectCard({ proj }) {
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 mt-4 text-lg font-medium 
-            text-cyan-400 hover:text-cyan-300 transition-colors
+            text-cyan-300 hover:text-purple-300 transition-colors
             group-hover:translate-x-2 duration-300"
         >
           View on GitHub 
@@ -200,25 +199,25 @@ const Home = () => {
           className="text-center space-y-8 max-w-5xl mx-auto px-4"
         >
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight">
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_2px_16px_rgba(34,211,238,0.5)]">
               Hi, I'm Suhas B M
             </span>
-          </h1>
+        </h1>
 
           <motion.p 
-            className="text-2xl md:text-3xl text-white/70 flex items-center justify-center gap-2"
+            className="text-2xl md:text-3xl text-cyan-200 flex items-center justify-center gap-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <span>{text}</span>
-            <Cursor cursorColor="#00FFD5" />
+          <span>{text}</span>
+          <Cursor cursorColor="#00FFD5" />
           </motion.p>
 
-          <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent w-48 mx-auto" />
+          <div className="h-px bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-transparent w-48 mx-auto" />
 
           <motion.p 
-            className="text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
@@ -232,30 +231,30 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2 }}
           >
-            <a
-              href="#projects"
+        <a
+          href="#projects"
               className="group px-8 py-4 text-lg font-medium rounded-full 
                 bg-gradient-to-r from-cyan-400 to-purple-500 
                 hover:from-cyan-500 hover:to-purple-600 
                 text-white shadow-lg hover:shadow-cyan-500/25 
                 transition-all duration-300 transform hover:-translate-y-1"
-            >
-              View Projects
+        >
+          View Projects
               <FaArrowDown className="inline-block ml-2 transform group-hover:translate-y-1 transition-transform" />
-            </a>
+        </a>
 
-            <a
-              href="https://drive.google.com/file/d/1cPYy5SuwtrQuSkozuLZvFKwilcfenMTb/view?usp=drive_link"
-              target="_blank"
-              rel="noopener noreferrer"
+        <a
+          href="https://drive.google.com/file/d/1cPYy5SuwtrQuSkozuLZvFKwilcfenMTb/view?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
               className="group px-8 py-4 text-lg font-medium rounded-full 
-                border border-white/20 text-white 
-                hover:border-cyan-400 hover:text-cyan-300 
+                border border-cyan-400/30 text-cyan-200 
+                hover:border-purple-400 hover:text-purple-200 
                 transition-all duration-300 transform hover:-translate-y-1
-                backdrop-blur-sm bg-white/5"
-            >
-              View Resume
-            </a>
+                backdrop-blur-sm bg-black/30"
+        >
+          View Resume
+        </a>
           </motion.div>
         </motion.div>
 
@@ -265,7 +264,7 @@ const Home = () => {
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
-          <FaArrowDown className="text-white/30 text-2xl" />
+          <FaArrowDown className="text-cyan-400/40 text-2xl" />
         </motion.div>
       </section>
 
@@ -282,11 +281,11 @@ const Home = () => {
         >
           <h2
             id="education-heading"
-            className="text-4xl font-semibold mb-4 text-cyan-400 text-center"
+            className="text-4xl font-semibold mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent text-center"
           >
             Education
           </h2>
-          <div className="h-px bg-white/20 my-8 w-24 mx-auto" />
+          <div className="h-px bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-transparent my-8 w-24 mx-auto" />
 
           <div className="relative max-w-4xl mx-auto">
             {/* Full-height vertical line */}
@@ -315,16 +314,16 @@ const Home = () => {
                   {/* Card container (second col) */}
                   <div
                     className={`
-                      px-8 py-6 bg-white/5 backdrop-blur-md  rounded-2xl border border-white/10
+                      px-8 py-6 bg-black/40 backdrop-blur-xl rounded-2xl border border-cyan-400/20
                       hover:scale-[1.02] transition-all
-                      ${item.isCurrent ? "border-cyan-400" : ""}
+                      ${item.isCurrent ? "border-cyan-400/40" : ""}
                     `}
                   >
-                    <p className="text-2xl font-semibold text-white">{item.title}</p>
+                    <p className="text-2xl font-semibold text-cyan-200">{item.title}</p>
                     <p className="mt-1 text-white/70">{item.institute}</p>
                     <p className="mt-2 font-mono text-sm text-white/50">{item.detail}</p>
                     {item.isCurrent && (
-                      <span className="inline-block mt-4 px-3 py-1 text-xs font-medium bg-cyan-500 text-black rounded-full">
+                      <span className="inline-block mt-4 px-3 py-1 text-xs font-medium bg-cyan-500/20 text-cyan-200 rounded-full">
                         Currently Pursuing
                       </span>
                     )}
@@ -348,10 +347,10 @@ const Home = () => {
         className="py-24"
         aria-labelledby="skills-heading"
       >
-        <h2 id="skills-heading" className="text-4xl font-semibold mb-4 text-cyan-400 text-center">
+        <h2 id="skills-heading" className="text-4xl font-semibold mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent text-center">
           Skills
         </h2>
-        <div className="h-px bg-white/20 my-8 w-24 mx-auto" />
+        <div className="h-px bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-transparent my-8 w-24 mx-auto" />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
           {skillsGroups.map((grp) => (
@@ -360,19 +359,19 @@ const Home = () => {
                 className="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d] hover:[transform:rotateY(180deg)]"
               >
                 <div
-                  className="absolute inset-0 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 flex items-center justify-center"
+                  className="absolute inset-0 bg-black/40 backdrop-blur-xl rounded-2xl border border-cyan-400/20 flex items-center justify-center"
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(0deg)" }}
                 >
-                  <h3 className="text-2xl font-semibold text-cyan-500">{grp.title}</h3>
+                  <h3 className="text-2xl font-semibold text-cyan-300">{grp.title}</h3>
                 </div>
                 <div
-                  className="absolute inset-0 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 flex flex-col items-center justify-center space-y-2 [transform:rotateY(180deg)]"
+                  className="absolute inset-0 bg-black/60 backdrop-blur-xl rounded-2xl border border-purple-400/20 p-6 flex flex-col items-center justify-center space-y-2 [transform:rotateY(180deg)]"
                   style={{ backfaceVisibility: "hidden" }}
                 >
-                  <h3 className="text-xl font-medium text-cyan-300 text-center">{grp.title}</h3>
+                  <h3 className="text-xl font-medium text-purple-300 text-center">{grp.title}</h3>
                   <div className="flex flex-wrap gap-2 justify-center mt-2">
                     {grp.items.map((skill) => (
-                      <span key={skill} className="px-4 py-2 text-md rounded-full bg-cyan-500/10 text-white/90">
+                      <span key={skill} className="px-4 py-2 text-md rounded-full bg-cyan-400/10 text-cyan-200 border border-cyan-400/20">
                         {skill}
                       </span>
                     ))}
@@ -395,10 +394,10 @@ const Home = () => {
   className="py-24"
   aria-labelledby="projects-heading"
 >
-  <h2 id="projects-heading" className="text-4xl font-semibold mb-4 text-cyan-400 text-center">
+  <h2 id="projects-heading" className="text-4xl font-semibold mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent text-center">
     Projects
   </h2>
-  <div className="h-px bg-white/20 my-8 w-24 mx-auto" />
+  <div className="h-px bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-transparent my-8 w-24 mx-auto" />
 
   <div className="grid gap-12 lg:grid-cols-2 px-4">
     {projects.map((proj) => (
@@ -417,16 +416,16 @@ const Home = () => {
         className="py-24"
         aria-labelledby="hackathons-heading"
       >
-        <h2 id="hackathons-heading" className="text-4xl font-semibold mb-4 text-cyan-400 text-center">
+        <h2 id="hackathons-heading" className="text-4xl font-semibold mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent text-center">
           Hackathons & Challenges
         </h2>
-        <div className="h-px bg-white/20 my-8 w-24 mx-auto" />
+        <div className="h-px bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-transparent my-8 w-24 mx-auto" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 px-4">
           {hackathons.map((item, idx) => (
             <div
               key={idx}
-              className="relative bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 flex flex-col justify-between hover:scale-[1.02] transition-all"
+              className="relative bg-black/40 backdrop-blur-xl rounded-2xl border border-cyan-400/20 p-8 flex flex-col justify-between hover:scale-[1.02] transition-all shadow-xl hover:shadow-cyan-500/20"
             >
               <div
                 className={`
@@ -437,7 +436,7 @@ const Home = () => {
                 {item.status}
               </div>
               <div className="space-y-4">
-                <h3 className="text-2xl font-semibold text-white text-center">
+                <h3 className="text-2xl font-semibold text-cyan-200 text-center">
                   {item.title}
                 </h3>
                 <p className="text-cyan-300 text-sm text-center font-medium">
@@ -449,7 +448,7 @@ const Home = () => {
               </div>
               <div className="mt-4 text-center">
                 {item.status === "In Progress" && (
-                  <span className="px-4 py-2 text-xs font-medium bg-white/10 rounded-full text-white/70">
+                  <span className="px-4 py-2 text-xs font-medium bg-cyan-400/10 rounded-full text-cyan-200">
                     Stay tuned…
                   </span>
                 )}
@@ -466,29 +465,28 @@ const Home = () => {
       >
         <div className="relative max-w-4xl mx-auto px-4">
           <motion.h2 
-            className="text-4xl font-semibold text-center mb-16"
+            className="text-4xl font-semibold text-center mb-16 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            <span>
               Let's build something impactful
             </span>
           </motion.h2>
 
           <div className="grid md:grid-cols-2 gap-8">
             <motion.div 
-              className="group p-8 bg-gradient-to-br from-white/5 to-white/[0.02] 
-                backdrop-blur-xl rounded-2xl border border-white/10 
+              className="group p-8 bg-black/40 backdrop-blur-xl rounded-2xl border border-cyan-400/20 
                 hover:border-cyan-400/50 transition-all duration-500
-                hover:shadow-lg hover:shadow-cyan-500/10"
+                hover:shadow-lg hover:shadow-cyan-500/20"
               whileHover={{ scale: 1.02 }}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
               <FaEnvelope className="text-4xl text-cyan-400 mb-4 transform group-hover:rotate-12 transition-transform" />
-              <h3 className="text-xl font-semibold text-white mb-2">Email Me</h3>
+              <h3 className="text-xl font-semibold text-cyan-200 mb-2">Email Me</h3>
               <a 
                 href="mailto:suhaasbm2004@gmail.com" 
                 className="text-white/70 hover:text-cyan-300 transition-colors block"
@@ -498,17 +496,16 @@ const Home = () => {
             </motion.div>
 
             <motion.div 
-              className="group p-8 bg-gradient-to-br from-white/5 to-white/[0.02] 
-                backdrop-blur-xl rounded-2xl border border-white/10 
-                hover:border-cyan-400/50 transition-all duration-500
-                hover:shadow-lg hover:shadow-cyan-500/10"
+              className="group p-8 bg-black/40 backdrop-blur-xl rounded-2xl border border-cyan-400/20 
+                hover:border-purple-400/50 transition-all duration-500
+                hover:shadow-lg hover:shadow-purple-500/20"
               whileHover={{ scale: 1.02 }}
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
               <FaPhone className="text-4xl text-cyan-400 mb-4 transform group-hover:rotate-12 transition-transform" />
-              <h3 className="text-xl font-semibold text-white mb-2">Call Me</h3>
+              <h3 className="text-xl font-semibold text-cyan-200 mb-2">Call Me</h3>
               <a 
                 href="tel:+919036751497" 
                 className="text-white/70 hover:text-cyan-300 transition-colors block"
@@ -516,7 +513,7 @@ const Home = () => {
                 +91 9036751497
               </a>
             </motion.div>
-          </div>
+        </div>
 
           <motion.div 
             className="mt-12 text-center"
@@ -524,14 +521,14 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <a
-              href="mailto:suhaasbm2004@gmail.com"
+        <a
+          href="mailto:suhaasbm2004@gmail.com"
               className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium 
                 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 
                 hover:from-cyan-500 hover:to-purple-600 
                 text-white shadow-lg hover:shadow-cyan-500/25 
                 transition-all duration-300 transform hover:-translate-y-1"
-            >
+        >
               Reach Out
               <FaEnvelope className="transform group-hover:rotate-12 transition-transform" />
             </a>

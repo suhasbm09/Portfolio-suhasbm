@@ -15,15 +15,15 @@ const Header = () => {
   return (
     <header className="fixed top-4 left-4 right-4 z-50 bg-black/40 backdrop-blur-xl text-white rounded-3xl border border-cyan-400/20 shadow-2xl shadow-cyan-500/10 px-8 py-5 flex justify-between items-center transition-all duration-500">
       <h1
-        className="
+          className="
           text-2xl md:text-2xl lg:text-3xl font-extrabold tracking-widest select-none
           bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent
           drop-shadow-[0_2px_16px_rgba(34,211,238,0.5)]
           animate-pulse-slow
-        "
+          "
         style={{ letterSpacing: '0.18em' }}
-      >
-        SUHAS B M
+        >
+          SUHAS B M
       </h1>
 
       {/* Desktop Links */}
